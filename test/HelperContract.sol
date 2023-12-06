@@ -3,14 +3,16 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "CMTAT/CMTAT_STANDALONE.sol";
+import "CMTAT/interfaces/IAuthorizationEngine.sol";
+import "CMTAT/interfaces/draft-IERC1404/IRuleEngineCMTAT.sol";
 /**
 @title Constants used by the tests
 */
-abstract contract HelperContract is RuleWhitelistInvariantStorage,RuleSanctionlistInvariantStorage  {
+abstract contract HelperContract {
     // EOA to perform tests
     address constant ZERO_ADDRESS = address(0);
     address constant DEFAULT_ADMIN_ADDRESS = address(1);
-    address constant RULE_ENGINE_OPERATOR_ADDRESS = address(3);
+    address constant AUTHORIZATION_ENGINE_OPERATOR_ADDRESS = address(3);
     address constant ATTACKER = address(4);
     address constant ADDRESS1 = address(5);
     address constant ADDRESS2 = address(6);
@@ -26,22 +28,15 @@ abstract contract HelperContract is RuleWhitelistInvariantStorage,RuleSanctionli
     // contract
     CMTAT_STANDALONE CMTAT_CONTRACT;
 
-    bytes32 public constant RULE_ENGINE_ROLE = keccak256("RULE_ENGINE_ROLE");
+    bytes32 public constant AUTHORIZATION_ENGINE_ROLE = keccak256("AUTHORIZATION_ENGINE_ROLE");
 
     // Forwarder
     string ERC2771ForwarderDomain = 'ERC2771ForwarderDomain';
 
-    // RuleEngine event
-    event AddRule(IRule indexed rule);
-    event RemoveRule(IRule indexed rule);
-    event ClearRules(IRule[] rulesRemoved);
+    // AuthorizationEngine event
 
-    // Custom error RuleEngine
-    error RuleEngine_RuleAddressZeroNotAllowed();
-    error RuleEngine_RuleAlreadyExists();
-    error RuleEngine_RuleDoNotMatch();
-    error RuleEngine_AdminWithAddressZeroNotAllowed();
-    error RuleEngine_ArrayIsEmpty();
+    // Custom error AuthorizationEngine
+    error AuthorizationEngine_AdminWithAddressZeroNotAllowed();
 
     constructor() {}
 }
