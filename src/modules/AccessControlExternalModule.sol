@@ -79,7 +79,7 @@ abstract contract AccessControlExternalModule is AccessControl, AccessControlExt
         _changeDefaultAdminDelay(newDelay);
     }
 
-        /**
+    /**
      * See IAccessControlDefaultAdminRules
      */
     function acceptDefaultAdminTransfer() public virtual {

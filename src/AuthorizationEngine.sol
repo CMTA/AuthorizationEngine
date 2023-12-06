@@ -39,6 +39,9 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
     /** 
     * @notice Validate a transfer
     * @return True if the operation is valid, false otherwise
+    * @dev Requirements:
+    * - the caller must have the `CMTAT_CONTRACT_ROLEE`
+    * It means that only the CMTAT contract can call this function
     **/
     function operateOnAuthorization(
          bytes32 role, address account
