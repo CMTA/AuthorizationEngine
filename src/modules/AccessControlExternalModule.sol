@@ -108,7 +108,7 @@ abstract contract AccessControlExternalModule is AccessControl, AccessControlExt
     /**
      * See IAccessControlDefaultAdminRules
      */
-    function rollbackDefaultAdminDelay() public virtual onlyRole(DEFAULT_ADMIN_ROLE) {
+    function rollbackDefaultAdminDelay() public virtual onlyRole(AUTHORIZATION_ENGINE_ROLE) {
         _rollbackDefaultAdminDelay();
     }
 

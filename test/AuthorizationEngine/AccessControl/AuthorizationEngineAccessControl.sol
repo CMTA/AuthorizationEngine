@@ -57,12 +57,12 @@ contract RuleEngineAccessControlTest is Test, HelperContract {
     }
 
 
-    function testCannotAttackerCancelRules() public { 
+    function testCannotAttackerCancelAdminTransfer() public { 
         // Arrange
         // Act
         vm.prank(ATTACKER);
         vm.expectRevert(
-        abi.encodeWithSelector(AccessControlUnauthorizedAccount.selector, ATTACKER, AUTHORIZATION_ENGINE_OPERATOR_ADDRESS));   
+        abi.encodeWithSelector(AccessControlUnauthorizedAccount.selector, ATTACKER, AUTHORIZATION_ENGINE_ROLE));   
         authorizationEngineMock.cancelDefaultAdminTransfer();
     }
 
@@ -83,6 +83,5 @@ contract RuleEngineAccessControlTest is Test, HelperContract {
         vm.expectRevert(
         abi.encodeWithSelector(AccessControlUnauthorizedAccount.selector, ATTACKER, AUTHORIZATION_ENGINE_ROLE));   
         authorizationEngineMock.rollbackDefaultAdminDelay();
- 
     }
 }
