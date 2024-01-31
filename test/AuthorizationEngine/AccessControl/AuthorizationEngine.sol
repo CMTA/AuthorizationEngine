@@ -8,7 +8,7 @@ import "src/AuthorizationEngine.sol";
 /**
 @title Tests on the Access Control
 */
-contract RuleEngineAccessControlTest is Test, HelperContract {
+contract AuthorizationEngineAccessControlTest is Test, HelperContract {
     // Custom error openZeppelin
     error AccessControlUnauthorizedAccount(address account, bytes32 neededRole);
     AuthorizationEngine authorizationEngineMock;
