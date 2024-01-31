@@ -3,8 +3,8 @@ pragma solidity ^0.8.20;
 
 import "forge-std/Test.sol";
 import "CMTAT/CMTAT_STANDALONE.sol";
-import "CMTAT/interfaces/IAuthorizationEngine.sol";
-import "CMTAT/interfaces/draft-IERC1404/IRuleEngineCMTAT.sol";
+import "CMTAT/interfaces/engine/IAuthorizationEngine.sol";
+import "CMTAT/interfaces/engine/IRuleEngine.sol";
 /**
 @title Constants used by the tests
 */
@@ -37,6 +37,9 @@ abstract contract HelperContract {
 
     // Custom error AuthorizationEngine
     error AuthorizationEngine_AdminWithAddressZeroNotAllowed();
+
+    // CMTAT
+    error CMTAT_AuthorizationModule_InvalidAuthorization();
 
     constructor() {}
 }

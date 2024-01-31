@@ -31,7 +31,7 @@ contract RuleEngineAccessControlTest is Test, HelperContract {
             decimals,
             "CMTAT_ISIN",
             "https://cmta.ch",
-            IRuleEngineCMTAT(address(0)),
+            IRuleEngine(address(0)),
             "CMTAT_info",
             FLAG
         );
@@ -53,7 +53,7 @@ contract RuleEngineAccessControlTest is Test, HelperContract {
         vm.prank(ATTACKER);
         vm.expectRevert(
         abi.encodeWithSelector(AccessControlUnauthorizedAccount.selector, ATTACKER, AUTHORIZATION_ENGINE_ROLE));   
-        authorizationEngineMock.    changeDefaultAdminDelay(uint48(48));
+        authorizationEngineMock.changeDefaultAdminDelay(uint48(48));
     }
 
 

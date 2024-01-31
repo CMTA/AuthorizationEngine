@@ -6,11 +6,11 @@ pragma solidity ^0.8.20;
 import "./modules/MetaTxModuleStandalone.sol";
 import "./modules/AccessControlExternalModule.sol";
 import "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
-
+import "CMTAT/interfaces/engine/IAuthorizationEngine.sol";
 /**
 @title Implementation of a ruleEngine defined by the CMTAT
 */
-contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessControlExternalModule {
+contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessControlExternalModule, IAuthorizationEngine {
     error AuthorizationEngine_AdminWithAddressZeroNotAllowed();
     /// @dev Role to manage the ruleEngine
     bytes32 public constant CMTAT_CONTRACT_ROLE = keccak256("CMTAT_CONTRACT_ROLE");
@@ -37,16 +37,29 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
    
 
     /** 
-    * @notice Validate a transfer
+    * @notice Validate an operation "GrantRole"
     * @return True if the operation is valid, false otherwise
     * @dev Requirements:
     * - the caller must have the `CMTAT_CONTRACT_ROLEE`
     * It means that only the CMTAT contract can call this function
     **/
-    function operateOnAuthorization(
+    function operateOnGrantRole(
          bytes32 role, address account
     ) public view onlyRole(CMTAT_CONTRACT_ROLE) returns (bool)  {
         return checkTransferAdmin(role, account);
+    }
+
+    /** 
+    * @notice Validate an operation revokeRole
+    * @return True if the operation is valid, false otherwise
+    * @dev Requirements:
+    * - the caller must have the `CMTAT_CONTRACT_ROLEE`
+    * It means that only the CMTAT contract can call this function
+    **/
+    function operateOnRevokeRole(
+         bytes32 /*role*/, address /*account*/
+    ) public view onlyRole(CMTAT_CONTRACT_ROLE) returns (bool)  {
+        return true;
     }
 
 

@@ -38,7 +38,7 @@ contract CMTATIntegration is Test, HelperContract {
             decimals,
             "CMTAT_ISIN",
             "https://cmta.ch",
-            IRuleEngineCMTAT(address(0)),
+            IRuleEngine(address(0)),
             "CMTAT_info",
             FLAG
         );
