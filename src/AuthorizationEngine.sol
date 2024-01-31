@@ -69,10 +69,10 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
     function _msgSender()
         internal
         view
-        override(MetaTxModuleStandalone, Context)
+        override(ERC2771Context, Context)
         returns (address sender)
     {
-        return MetaTxModuleStandalone._msgSender();
+        return ERC2771Context._msgSender();
     }
 
     /** 
@@ -81,9 +81,15 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
     function _msgData()
         internal
         view
-        override(MetaTxModuleStandalone, Context)
+        override(ERC2771Context, Context)
         returns (bytes calldata)
     {
-        return MetaTxModuleStandalone._msgData();
+        return ERC2771Context._msgData();
+    }
+
+    function _contextSuffixLength() internal view 
+    override(ERC2771Context, Context)
+    returns (uint256) {
+         return ERC2771Context._contextSuffixLength();
     }
 }
