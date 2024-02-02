@@ -29,6 +29,8 @@ abstract contract HelperContract {
     CMTAT_STANDALONE CMTAT_CONTRACT;
 
     bytes32 public constant AUTHORIZATION_ENGINE_ROLE = keccak256("AUTHORIZATION_ENGINE_ROLE");
+    bytes32 public constant DEFAULT_ADMIN_ROLE = 0x00;
+ 
 
     // Forwarder
     string ERC2771ForwarderDomain = 'ERC2771ForwarderDomain';

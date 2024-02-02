@@ -3,13 +3,13 @@
 
 pragma solidity ^0.8.20;
 
-import {AccessControl} from "../../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
+import {AccessControl} from "../../../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
 import {AccessControlExternalModuleInternal} from "./AccessControlExternalModuleInternal.sol";
 
-import {SafeCast} from "../../lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol";
-import {Math} from "../../lib/openzeppelin-contracts/contracts/utils/math/Math.sol";
+import {SafeCast} from "../../../lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol";
+import {Math} from "../../../lib/openzeppelin-contracts/contracts/utils/math/Math.sol";
 
-import {IERC5313} from "../../lib/openzeppelin-contracts/contracts/interfaces/IERC5313.sol";
+import {IERC5313} from "../../../lib/openzeppelin-contracts/contracts/interfaces/IERC5313.sol";
 
 /**
  * @dev Extension of {AccessControl} that allows specifying special rules to manage
@@ -63,12 +63,11 @@ abstract contract AccessControlExternalModule is AccessControl, AccessControlExt
 
     }
 
-
     ///
     /// Override AccessControl role management
     ///
 
-        ///
+    ///
     /// AccessControlDefaultAdminRules public and internal setters for defaultAdminDelay/pendingDefaultAdminDelay
     ///
 

@@ -2,13 +2,12 @@
 
 pragma solidity ^0.8.20;
 
-//import "CMTAT/mocks/RuleEngine/interfaces/IRule.sol";
 import "./modules/MetaTxModuleStandalone.sol";
-import "./modules/AccessControlExternalModule.sol";
+import "./modules/OpenZeppelin/AccessControlExternalModule.sol";
 import "../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
 import "CMTAT/interfaces/engine/IAuthorizationEngine.sol";
 /**
-@title Implementation of a ruleEngine defined by the CMTAT
+@title Implementation of an AuthorizationEngine defined by the CMTAT
 */
 contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessControlExternalModule, IAuthorizationEngine {
     error AuthorizationEngine_AdminWithAddressZeroNotAllowed();
@@ -18,6 +17,8 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
     /**
     * @param admin Address of the contract (Access Control)
     * @param forwarderIrrevocable Address of the forwarder, required for the gasless support
+    * @param initialDelay delay before a new admin can accept the transfer
+    * @param CMTAT_contract CMTAT contract, can be define later
     */
     constructor(
         address admin,
@@ -31,7 +32,9 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
         }
         _grantRole(DEFAULT_ADMIN_ROLE, admin);
         _grantRole(AUTHORIZATION_ENGINE_ROLE, admin);
-        _grantRole(CMTAT_CONTRACT_ROLE, CMTAT_contract);
+        if(address(CMTAT_contract) != address(0)){
+            _grantRole(CMTAT_CONTRACT_ROLE, CMTAT_contract);
+        }
     }
 
    
@@ -46,11 +49,11 @@ contract AuthorizationEngine is AccessControl, MetaTxModuleStandalone,AccessCont
     function operateOnGrantRole(
          bytes32 role, address account
     ) public view onlyRole(CMTAT_CONTRACT_ROLE) returns (bool)  {
-        return checkTransferAdmin(role, account);
+        return AccessControlExternalModuleInternal.checkTransferAdmin(role, account);
     }
 
     /** 
-    * @notice Validate an operation revokeRole
+    * @notice Validate an operation revokeRole, return only true
     * @return True if the operation is valid, false otherwise
     * @dev Requirements:
     * - the caller must have the `CMTAT_CONTRACT_ROLEE`

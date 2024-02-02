@@ -24,6 +24,8 @@ contract CMTATIntegration is Test, HelperContract {
 
     uint256 FLAG = 5;
 
+    uint48 DEFAULT_ADMIN_DELAY_WEB3 = 10;
+
     // Arrange
     function setUp() public {
         // global arrange
@@ -45,31 +47,42 @@ contract CMTATIntegration is Test, HelperContract {
         // specific arrange
         vm.prank(DEFAULT_ADMIN_ADDRESS);
         authorizationEngineMock = new AuthorizationEngine(DEFAULT_ADMIN_ADDRESS, ZERO_ADDRESS,   uint48(10), address(CMTAT_CONTRACT));
-        vm.prank(DEFAULT_ADMIN_ADDRESS);
     }
 
     /******* Grant new admin *******/
     function testCannotGrantNewAdminIfNotAuthorized() public {
         // Arrange
-        /*vm.prank(ADDRESS1);
+        vm.prank(DEFAULT_ADMIN_ADDRESS);
+        CMTAT_CONTRACT.setAuthorizationEngine(authorizationEngineMock);
         vm.expectRevert(
-        abi.encodeWithSelector(Errors.CMTAT_InvalidTransfer.selector, ADDRESS1, ADDRESS2, 21));   
+        abi.encodeWithSelector(Errors.CMTAT_AuthorizationModule_InvalidAuthorization.selector));
         // Act
-        CMTAT_CONTRACT.transfer(ADDRESS2, 21);*/
+        vm.prank(DEFAULT_ADMIN_ADDRESS);
+        CMTAT_CONTRACT.grantRole(DEFAULT_ADMIN_ROLE, ADDRESS2);
     }
 
     /******* Grant new admin *******/
 
     function testCanGrantNewAdminIfAuthorized() public {
-        // Arrange
-        /*uint256 amount = 21;
+        // Arrange CMTAT
         vm.prank(DEFAULT_ADMIN_ADDRESS);
-        ruleWhitelist.addAddressToTheWhitelist(ADDRESS2);
+        CMTAT_CONTRACT.setAuthorizationEngine(authorizationEngineMock);
+        
+        // Arrange AuthorizationEngine
+        // Starts an admin transfer
+        vm.prank(DEFAULT_ADMIN_ADDRESS);
+        authorizationEngineMock.beginDefaultAdminTransfer(ADDRESS1);
 
+        // Wait for acceptance
+        // We jump into the future
+        vm.warp(DEFAULT_ADMIN_DELAY_WEB3 + 2);
+
+        // New admin accept the transfer
         vm.prank(ADDRESS1);
-        vm.expectRevert(
-        abi.encodeWithSelector(Errors.CMTAT_InvalidTransfer.selector, ADDRESS1, ADDRESS2, amount));   
+        AuthorizationEngine(authorizationEngineMock).acceptDefaultAdminTransfer();
+        
         // Act
-        CMTAT_CONTRACT.transfer(ADDRESS2, amount);*/
+        vm.prank(DEFAULT_ADMIN_ADDRESS);
+        CMTAT_CONTRACT.grantRole(DEFAULT_ADMIN_ROLE, ADDRESS1);
     }
 }
