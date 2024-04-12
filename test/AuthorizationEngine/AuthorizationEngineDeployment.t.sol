@@ -43,9 +43,6 @@ contract AuthorizationEngineTest is Test, HelperContract {
         MinimalForwarderMock forwarder = new MinimalForwarderMock(
         );
         forwarder.initialize(ERC2771ForwarderDomain);
-
- 
-
         // Act
         authorizationEngineMock = new AuthorizationEngine(
             AUTHORIZATION_ENGINE_OPERATOR_ADDRESS,

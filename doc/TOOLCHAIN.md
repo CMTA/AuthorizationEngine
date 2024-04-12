@@ -74,16 +74,8 @@ npm run-script uml:test
 
 Or only specified contracts
 
-RuleEngine
-
 ```
-npx sol2uml class -i -c src/RuleEngine.sol
-```
-
-Whitelist
-
-```
-npx sol2uml class src/Whitelist.sol
+npx sol2uml class -i -c src/AuthorizationEngine.sol
 ```
 
 The related component can be installed with `npm install` (see [package.json](./package.json)). 
@@ -124,7 +116,7 @@ npm run-script surya:report
 >Slither is a Solidity static analysis framework written in Python3
 
 ```bash
- slither .  --checklist --filter-paths "openzeppelin-contracts|test|CMTAT|forge-std" > slither-report.md
+slither .  --checklist --filter-paths "openzeppelin-contracts|test|CMTAT|forge-std" > slither-report.md
 ```
 
 

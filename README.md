@@ -17,7 +17,7 @@ This `AuthorizationEngine` adds a supplementary check on the function `grantRole
 
 - The delay can be changed by scheduling, see [`changeDefaultAdminDelay`](https://docs.openzeppelin.com/contracts/5.x/api/access#AccessControlDefaultAdminRules-changeDefaultAdminDelay-uint48-).
 
-The behavior and code the code (under MIT License) come mainly from the OpenZeppelin version AcessControlDefaultAdminRule.
+The behavior and the code (under MIT License) come mainly from the OpenZeppelin version `AcessControlDefaultAdminRule`.
 
 Nevertheless, contrary to OpenZeppelin, these checks are NOT performed:
 
@@ -32,6 +32,16 @@ See [https://docs.openzeppelin.com/contracts/5.x/api/access#AccessControlDefault
 ![authorizationEngine.drawio](./doc/schema/authorizationEngine.drawio.png)
 
 
+
+## Documentation
+
+Here a summary of the main documentation
+
+| Document                | Link/Files                             |
+| ----------------------- | -------------------------------------- |
+| Technical documentation | [doc/technical](./doc/technical.md)    |
+| Toolchain               | [doc/TOOLCHAIN.md](./doc/TOOLCHAIN.md) |
+| Surya report            | [doc/surya](./doc/schema/surya)        |
 
 ## Usage
 
@@ -69,11 +79,7 @@ See also the command's [documentation](https://book.getfoundry.sh/reference/forg
 The official documentation is available in the Foundry [website](https://book.getfoundry.sh/reference/forge/build-commands) 
 
 ```
- forge build --contracts src/RuleEngine.sol
-```
-
-```
- forge build --contracts src/RuleWhiteList.sol
+ forge build --contracts src/AuthorizationEngine.sol
 ```
 
 ## Testing

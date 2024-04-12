@@ -25,6 +25,7 @@ contract CMTATIntegration is Test, HelperContract {
     uint256 FLAG = 5;
 
     uint48 DEFAULT_ADMIN_DELAY_WEB3 = 10;
+    bytes32 PAUSER_ROLE = 0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a;
 
     // Arrange
     function setUp() public {
@@ -84,5 +85,14 @@ contract CMTATIntegration is Test, HelperContract {
         // Act
         vm.prank(DEFAULT_ADMIN_ADDRESS);
         CMTAT_CONTRACT.grantRole(DEFAULT_ADMIN_ROLE, ADDRESS1);
+    }
+    function testCanGrantOtherRoleWithoutRestriction() public {
+        // Arrange CMTAT
+        vm.prank(DEFAULT_ADMIN_ADDRESS);
+        CMTAT_CONTRACT.setAuthorizationEngine(authorizationEngineMock);
+        
+        // Act
+        vm.prank(DEFAULT_ADMIN_ADDRESS);
+        CMTAT_CONTRACT.grantRole(PAUSER_ROLE, ADDRESS1);
     }
 }

@@ -1,22 +1,17 @@
 
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts (last updated v5.0.0) (access/extensions/AccessControlDefaultAdminRules.sol)
 
 pragma solidity ^0.8.20;
 
-import {AccessControl} from "../../../lib/openzeppelin-contracts/contracts/access/AccessControl.sol";
 import {SafeCast} from "../../../lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol";
 import {Math} from "../../../lib/openzeppelin-contracts/contracts/utils/math/Math.sol";
 
-import {IERC5313} from "../../../lib/openzeppelin-contracts/contracts/interfaces/IERC5313.sol";
-
 /**
- * @dev Extension of {AccessControl} that allows specifying special rules to manage
- * the `DEFAULT_ADMIN_ROLE` holder, which is a sensitive role with special permissions
- * over other roles that may potentially have privileged rights in the system.
+ * @dev 
+ * This contract is a modified version of the contract AccessControlDefaultAdminRule from OpenZeppelin.
+ * See OpenZeppelin Contracts (last updated v5.0.0) (access/extensions/AccessControlDefaultAdminRules.sol)
+ * The main difference is in the case of OZ, the rules apply to the actual contract admin.
  *
- * If a specific role doesn't have an admin role assigned, the holder of the
- * `DEFAULT_ADMIN_ROLE` will have the ability to grant it and revoke it.
  *
  * This contract implements the following risk mitigations on top of {AccessControl}:
  *
@@ -24,18 +19,7 @@ import {IERC5313} from "../../../lib/openzeppelin-contracts/contracts/interfaces
  * * Enforces a 2-step process to transfer the `DEFAULT_ADMIN_ROLE` to another account.
  * * Enforces a configurable delay between the two steps, with the ability to cancel before the transfer is accepted.
  * * The delay can be changed by scheduling, see {changeDefaultAdminDelay}.
- * * It is not possible to use another role to manage the `DEFAULT_ADMIN_ROLE`.
  *
- * Example usage:
- *
- * ```solidity
- * contract MyToken is AccessControlDefaultAdminRules {
- *   constructor() AccessControlDefaultAdminRules(
- *     3 days,
- *     msg.sender // Explicit initial `DEFAULT_ADMIN_ROLE` holder
- *    ) {}
- * }
- * ```
  */
 abstract contract AccessControlExternalModuleInternal {
     // Events
@@ -109,8 +93,8 @@ abstract contract AccessControlExternalModuleInternal {
 
    
     /*
-    @notice check if the admin transfer is authorized
-    @dev additional function to the OpenZeppelin implementation
+    * @notice check if the admin transfer is authorized
+    * @dev additional function to the OpenZeppelin implementation
     */
     function checkTransferAdmin( bytes32 role, address newAdmin) internal view returns (bool) {
         if(role == 0x00){
